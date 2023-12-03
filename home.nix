@@ -42,12 +42,15 @@
     # # Building this configuration will create a copy of 'dotfiles/screenrc' in
     # # the Nix store. Activating the configuration will then make '~/.screenrc' a
     # # symlink to the Nix store copy.
-#     ".gitconfig".text = ''
-#       [credential "https://github.com"]
-#       helper = !/home/john/.nix-profile/bin/gh auth git-credential
-#       [credential "https://gist.github.com"]
-#       helper = !/home/john/.nix-profile/bin/gh auth git-credential
-#     '';
+    ".gitconfig".text = ''
+[credential "https://github.com"]
+	helper = !/home/john/.nix-profile/bin/gh auth git-credential
+[credential "https://gist.github.com"] 
+	helper = !/home/john/.nix-profile/bin/gh auth git-credential
+[user]
+	email = noeljacob91@gmail.com
+	name = Noel Jacob
+    '';
 
     # # You can also set the file content immediately.
     # ".gradle/gradle.properties".text = ''
