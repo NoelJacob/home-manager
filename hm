@@ -12,7 +12,8 @@
           home-manager --impure --flake ~/home-manager switch
       }
       _init(){
-          gh auth login -p https -w
+          gh auth login -p https -w &&\
+          gh auth setup-git
       }
       _edit(){
       	  $EDITOR ~/home-manager/home.nix
