@@ -1,0 +1,38 @@
+#!/usr/bin/sh
+      bin=hms
+      _help(){
+          echo "Usage: $bin [command] [options]\n"
+          echo "$bin without options will run home-manager switch"
+          echo "Commands:"
+          echo "    init  Initialise programs"
+          echo "    edit  Edit home.nix"
+          echo ""
+      }
+      _switch(){
+          home-manager --impure --flake ~/home-manager switch
+      }
+      _init(){
+          gh auth login -p https -w
+      }
+      _edit(){
+      	  $EDITOR ~/home-manager/home.nix
+      }
+        
+      cmd=$1
+      case $cmd in
+          "")
+              _switch
+              ;;
+          "-h" | "--help")
+              _help
+              ;;
+          *)
+              shift
+              _${cmd} $@
+              if [ $? = 127 ]; then
+                  echo "Error: '$cmd' is not a known." >&2
+                  echo "       Run '$bin --help'." >&2
+                  exit 1
+              fi
+              ;;
+      esac

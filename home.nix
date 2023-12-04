@@ -3,6 +3,7 @@
 {
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
+
   home.username = "john";
   home.homeDirectory = "/home/john";
 
@@ -31,9 +32,7 @@
     # # You can also create simple shell scripts directly inside your
     # # configuration. For example, this adds a command 'my-hello' to your
     # # environment:
-    # (pkgs.writeShellScriptBin "my-hello" ''
-    #   echo "Hello, ${config.home.username}!"
-    # '')
+    
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -57,6 +56,10 @@
     #   org.gradle.console=verbose
     #   org.gradle.daemon.idletimeout=3600000
     # '';
+    ".local/bin/hms" = {
+      executable = true;
+      source = "${config.home.homeDirectory}/home-manager/hms";
+    };
   };
 
   # Home Manager can also manage your environment variables through
@@ -71,7 +74,7 @@
   #  /etc/profiles/per-user/john/etc/profile.d/hm-session-vars.sh
   #
   home.sessionVariables = {
-    # EDITOR = "emacs";
+    EDITOR = "micro";
   };
 
   # Let Home Manager install and manage itself.
@@ -101,5 +104,9 @@
       extra-nix-path = "nixpkgs=flake:nixpkgs";
     };
   };
+  nixpkgs.config.allowUnfree = true;
+  home.sessionPath = [
+    "${config.home.homeDirectory}/.local/bin"
+  ];
 
 }
