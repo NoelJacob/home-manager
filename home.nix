@@ -1,6 +1,8 @@
 { config, pkgs, ... }:
 
-{
+let
+  this = /. + config.home.homeDirectory + /home-manager;
+in {
 
   home.username = "john";
   home.homeDirectory = "/home/john";
@@ -8,23 +10,16 @@
 
   home.packages = with pkgs; [
     hello
-
+	jetbrains.idea-ultimate
+	rustup
   ];
 
   home.file = {
-    ".gitconfig".text = ''
-        [credential "https://github.com"]
-            helper = !${config.home.homeDirectory}/.nix-profile/bin/gh auth git-credential
-        [credential "https://gist.github.com"]
-            helper = !${config.home.homeDirectory}/.nix-profile/bin/gh auth git-credential
-        [user]
-            email = noeljacob91@gmail.com
-            name = Noel Jacob
-    '';
+    ".gitconfig".source = this + /gitconfig;
 
     ".local/bin/hm" = {
         executable = true;
-        source = "${config.home.homeDirectory}/home-manager/hm";
+        source = this + /hm;
     };
   };
 
