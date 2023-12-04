@@ -1,5 +1,5 @@
 #!/usr/bin/sh
-      bin=hms
+      bin=hm
       _help(){
           echo "Usage: $bin [command] [options]\n"
           echo "$bin without options will run home-manager switch"
@@ -16,6 +16,12 @@
       }
       _edit(){
       	  $EDITOR ~/home-manager/home.nix
+      }
+      _up(){
+      	  git -C ~/home-manager add -A &&\
+      	  git -C ~/home-manager commit -m "z" &&\
+      	  git -C ~/home-manager pull --rebase &&\
+      	  git -C ~/home-manager push
       }
         
       cmd=$1
